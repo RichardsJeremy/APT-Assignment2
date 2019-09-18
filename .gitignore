@@ -1,2 +1,5 @@
 *.swp
 *.vscode
+testClient_LL.*
+LinkedList_.*
+ll_test
