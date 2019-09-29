@@ -1,4 +1,6 @@
-# Breakdown of Quirkle
+# Breakdown of Assignment
+
+## Person Breakdown
 
 *Liam* - Menu class, Loading class, Quirkle class
 
@@ -12,13 +14,17 @@
 *Max* - Tile class, **possibly hints and AI classes**
 
 
+## Genral Breakdown
+
 *Multiple* - controller class, 
 
 *Not allocated* - Help class, AI class, Hints class, Saving class,
 
 *Total Number* = 
 
-## Hierarchy 
+# Other Information
+
+### Hierarchy 
 
 1. Quirkle
 2. Menu
@@ -26,7 +32,7 @@
 4. Controller <- Tiles
 5. Engine / Board
 
-## Milestones Extra
+### Milestones Extra
 
 1. Expanding Board
 2. AI
@@ -36,7 +42,7 @@
 6. Unicode
 7. Instant Replay **(if time)** 
 
-## Notes
+### Notes
 No break **(therefore no case)**
 No continue
 No goto 
@@ -45,5 +51,5 @@ No magic numbers
 Use camelcase 
 No multiple return statements **(Only one exit per function)**
 Use comments to help with clearing up how code works
-
+Line length under 80 chars
 
