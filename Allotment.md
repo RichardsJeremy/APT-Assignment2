@@ -3,7 +3,7 @@
 *Liam* - Menu class, Loading class, Quirkle class
 
 
-*Travis* - Player class **and functions in controller)** , 
+*Travis* - Player class **(and functions in controller)** , 
 
 
 *Jeremy* - Board class,  
@@ -35,5 +35,15 @@
 5. Invalid Input
 6. Unicode
 7. Instant Replay **(if time)** 
+
+## Notes
+No break **(therefore no case)**
+No continue
+No goto 
+No next
+No magic numbers
+Use camelcase 
+No multiple return statements **(Only one exit per function)**
+Use comments to help with clearing up how code works
 
 
