@@ -1,20 +1,20 @@
-#Breakdown of Quirkle
+# Breakdown of Quirkle
 
-*Liam* - Menu class, Saving class, Loading class, Quirkle class
+*Liam* - Menu class, Loading class, Quirkle class
 
 
-*Travis* - Player class, 
+*Travis* - Player class **and functions in controller)** , 
 
 
 *Jeremy* - Board class,  
 
 
-*Max* - Tile class, 
+*Max* - Tile class, **possibly hints and AI classes**
 
 
 *Multiple* - controller class, 
 
-*Not allocated* - Help class, AI class, Hints class 
+*Not allocated* - Help class, AI class, Hints class, Saving class,
 
 *Total Number* = 
 
@@ -32,5 +32,8 @@
 2. AI
 3. Forfeit
 4. Hints
+5. Invalid Input
+6. Unicode
+7. Instant Replay **(if time)** 
 
 
