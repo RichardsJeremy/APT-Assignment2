@@ -14,7 +14,7 @@
 *Max* - Tile class, **possibly hints and AI classes**
 
 
-## Genral Breakdown
+## General Breakdown
 
 *Multiple* - controller class, 
 
