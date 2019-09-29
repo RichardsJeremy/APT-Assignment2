@@ -43,13 +43,16 @@
 7. Instant Replay **(if time)** 
 
 ### Notes
-No break **(therefore no case)**
-No continue
-No goto 
-No next
-No magic numbers
-Use camelcase 
-No multiple return statements **(Only one exit per function)**
-Use comments to help with clearing up how code works
-Line length under 80 chars
+* No break **(therefore no case)**
+* No continue
+* No goto 
+* No next
+* No magic numbers
+* Use camelcase for variables
+* No multiple return statements **(Only one exit per function)**
+* Use comments to help with clearing up how code works
+* Line length under 80 chars
+* No default security levels **(i.e. use public, private, protected)**
+* Variables *must* be initilized as they are declared
+* Do *not* import global namespace **(i.e. import std)**
 
