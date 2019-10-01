@@ -1,17 +1,18 @@
 
 #ifndef ASSIGN2_TILE_H
 #define ASSIGN2_TILE_H
-
-// Define a Colour type
-typedef char Colour;
-
-// Define a Shape type
-typedef int Shape;
+#include <string>
 
 class Tile {
+private:
+    char colour;
+    int shape;
 public:
-   Colour colour;
-   Shape  shape;
+    Tile(char colour_, int shape_);
+    std::string toString();
+    char getColour();
+    char getShape();
+    bool equals(Tile* inTile);
 };
 
 #endif // ASSIGN2_TILE_H
