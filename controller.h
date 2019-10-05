@@ -3,6 +3,7 @@
 
 class Board;
 class Player;
+class LinkedList;
 
 class controller
 {
@@ -19,11 +20,13 @@ public:
 
     void loadGame();
 
-    void runGame(Board *board, Player *player1, Player *player2);
+    void runGame(Board *board, Player *player1, Player *player2, LinkedList *bag);
 
-    void endGame();
+    void endGame(Player *player1, Player *player2);
 
-    void showInformation() {}
+    void showInformation();
+
+    void createShuffledBag(LinkedList *bag);
 };
 
 

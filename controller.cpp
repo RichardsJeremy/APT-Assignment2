@@ -2,10 +2,13 @@
 #include "player.cpp"
 #include "board.cpp"
 #include "gameEngine.cpp"
+#include "LinkedList.cpp"
 #include <iostream>
 #include <iterator>
 #include <string>
 #include <vector>
+
+#define NUMBER_OF_TILES 6
 
 controller::controller(/* args */)
 {
@@ -59,7 +62,16 @@ void controller::newGame()
     Player *player1 = new Player(playerOneName);
     Player *player2 = new Player(playerTwoName);
 
-    runGame(board, player1, player2);
+    LinkedList *bag = new LinkedList();
+    createShuffledBag(bag);
+
+    for (int i = 0; i < NUMBER_OF_TILES; i++)
+    {
+        //TODO code to remove front tiles from bag and add
+        // to players hands.
+    }
+
+    runGame(board, player1, player2, bag);
 }
 
 /* This method reads in input from a saved file to create a new gameEngine object with
@@ -87,7 +99,7 @@ void controller::loadGame()
 /*This method takes in a the neccessary objects to run the gaem and then loops 
 with a while loop until a player wins or quits
 */
-void controller::runGame(Board *board, Player *player1, Player *player2)
+void controller::runGame(Board *board, Player *player1, Player *player2, LinkedList *bag)
 {
     // Creating helper gameEngine object
     gameEngine *gameEngineHelper = new gameEngine();
@@ -138,51 +150,110 @@ void controller::runGame(Board *board, Player *player1, Player *player2)
             if (userTurn.length == 14)
             { //i.e a place move
                 std::string tile = userTurn.substr(6, 2);
-                std::string position = userTurn.substr(12,2);
+                std::string position = userTurn.substr(12, 2);
 
-                gameEngineHelper->placeTile(tile, position);
+                if (playerOneTurn)
+                {
+                    gameEngineHelper->placeTile(tile, position, bag, board, player1);
+                }
+                else
+                {
+                    gameEngineHelper->placeTile(tile, position, bag, board, player1);
+                }
             }
-            else if (userTurn.length == 10) //i.e. replace tile
+            else if ((userTurn.length == 10) && (userTurn.substr(0, 7) == "replace")) //i.e. replace tile
             {
-                std::string tile = userTurn.substr(9,2);
-                gameEngineHelper->replaceTile(tile);
+                if (bag->size() > 0)
+                {
+                    std::string tile = userTurn.substr(9, 2);
+                    if (playerOneTurn)
+                    {
+                        gameEngineHelper->replaceTile(tile, bag, player1);
+                    }
+                    else
+                    {
+                        gameEngineHelper->replaceTile(tile, bag, player2);
+                    }
+                }
+                else
+                {
+                    std::cout << "Bag is empty";
+                    invalidTurn = true;
+                }
             }
             else
             {
-                if ((userTurn.substr(0,4) == "save"))
+                if ((userTurn.substr(0, 4) == "save"))
                 {
                     gameEngineHelper->saveGame(userTurn.substr(6));
+                    quit = true;
                 }
-                 
+                std::cout << "Invalid Input";
                 invalidTurn = true;
             }
-            
+        }
+
+        // check bag or player hand
+        if ((bag->size == 0) || (player1->getHand()->size() == 0) || (player2->getHand()->size() == 0))
+        {
+            win = true;
+            endGame(player1, player2);
+        }
+        else // i.e. game is continuing
+        {
+            if (playerOneTurn)
+            {
+                playerOneTurn = false;
+            }
+            else
+            {
+                playerOneTurn = true;
+            }
         }
     }
 }
 
 //End of game and restarts menu and deletes save if there was one.
-void controller::endGame() {}
+void controller::endGame(Player *player1, Player *player2)
+{
+
+    std::cout << "Game over\n";
+    std::cout << "Score for " << player1->getName() << ": " << player1->getScore() << "\n";
+    std::cout << "Score for " << player2->getName() << ": " << player2->getScore() << "\n";
+    if (player1->getScore() > player2->getScore())
+    {
+        std::cout << "Player" << player1->getName() << " won!";
+    }
+    else
+    {
+        std::cout << "Player" << player2->getName() << " won!";
+    }
+}
 
 // displays information about who wrote the game
 void controller::showInformation()
 {
 
     std::cout << "\n----------------------------------\n";
-    std::cout << "Name:\tMaxwell Morrissy";
-    std::cout << "Student ID:\ts3668048";
-    std::cout << "Email:\ts3668048@student.rmit.edu.au\n";
+    std::cout << "Name:\tMaxwell Morrissy\n";
+    std::cout << "Student ID:\ts3668048\n";
+    std::cout << "Email:\ts3668048@student.rmit.edu.au\n\n";
 
-    std::cout << "Name:\tLiam Pietralla";
-    std::cout << "Student ID:\ts3784354";
-    std::cout << "Email:\ts3784354@student.rmit.edu.au\n";
+    std::cout << "Name:\tLiam Pietralla\n";
+    std::cout << "Student ID:\ts3784354\n";
+    std::cout << "Email:\ts3784354@student.rmit.edu.au\n\n";
 
-    std::cout << "Name:\tTravis Stella";
-    std::cout << "Student ID:\ts3783006";
-    std::cout << "Email:\ts3783006@student.rmit.edu.au\n";
+    std::cout << "Name:\tTravis Stella\n";
+    std::cout << "Student ID:\ts3783006\n";
+    std::cout << "Email:\ts3783006@student.rmit.edu.au\n\n";
 
-    std::cout << "Name:\tJeremy Richards";
-    std::cout << "Student ID:\ts3721762";
-    std::cout << "Email:\ts3721762@student.rmit.edu.au";
+    std::cout << "Name:\tJeremy Richards\n";
+    std::cout << "Student ID:\ts3721762\n";
+    std::cout << "Email:\ts3721762@student.rmit.edu.au\n";
     std::cout << "----------------------------------\n";
+}
+
+void controller::createShuffledBag(LinkedList *bag)
+{
+    //TODO create shuffled bag.
 }
