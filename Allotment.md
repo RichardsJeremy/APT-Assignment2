@@ -18,7 +18,7 @@
 
 *Multiple* - controller class, 
 
-*Not allocated* - Help class, AI class, Hints class, Saving class,
+*Not allocated* - All done
 
 *Total Number* = 
 
