@@ -9,6 +9,7 @@
 #include <vector>
 
 #define NUMBER_OF_TILES 6
+#define BOARD_HEIGHT 10
 
 controller::controller(/* args */)
 {
@@ -71,7 +72,7 @@ void controller::newGame()
         // to players hands.
     }
 
-    runGame(board, player1, player2, bag);
+    runGame(board, player1, player2, bag, true);
 }
 
 /* This method reads in input from a saved file to create a new gameEngine object with
@@ -84,31 +85,84 @@ void controller::loadGame()
     std::string fileName = "";
     std::cin >> fileName;
 
-    if (performFileCheck())
-    {
-        std::cout << "Quirkle game successfully loaded ";
+    // file is 18 lines long for all data
+    std::string fileData [18];
+    int loopCounter = 0;
+    std::string line;
+    std::ifstream saveFile (fileName);
 
+    //declaing bool for who starts
+    bool p1Starts = true;
+
+
+    if (saveFile.is_open())
+    {
+        while (! saveFile.eof())
+        {
+            std::getline(saveFile,line);
+            fileData[loopCounter] = line;
+            loopCounter++;
+        }
+        saveFile.close();
+
+        // getting players
+        std::string playerOneName = fileData[0];
+        int playerOneScore = std::stoi(fileData[1]);
+        // secondary constructor for player will convert string into linked list
+        std::string playerOneHand = fileData[2];
+        std::string playerTwoName = fileData[3];
+        int playerTwoScore = std::stoi(fileData[4]);
+        // secondary constructor for player will convert string into linked list
+        std::string playerTwoHand = fileData[5];
+
+        Player *player1 = new Player(playerOneName, playerOneScore, playerOneHand);
+        Player *player2 = new Player(playerTwoName, playerTwoScore, playerTwoHand);
+
+        std::string boardString = "";
+        for (int i = 6; i < BOARD_HEIGHT; i++)
+        {
+            boardString += fileData[i] + "\n";
+        }
+        //constructor for board takes in string input. 
+        Board *board = new Board(boardString);
+        
+        //constructor for list takes in string
+        LinkedList *bag = new LinkedList(16);
+        if (fileData[17] == fileData[0])
+        {
+            p1Starts = true;
+        }
+        else
+        {
+             p1Starts = false;
+        }
+                
+        std::cout << "Quirkle game successfully loaded ";
+        runGame(board, player1, player2, bag, p1Starts);
         // TODO implment loading into various form to create board and players.
     }
     else
     {
-        return;
+        std::cout << "File not loaded :(\n";
     }
 }
 
 /*This method takes in a the neccessary objects to run the gaem and then loops 
 with a while loop until a player wins or quits
 */
-void controller::runGame(Board *board, Player *player1, Player *player2, LinkedList *bag)
+void controller::runGame(Board *board, Player *player1, Player *player2, LinkedList *bag,
+bool p1Starts)
 {
     // Creating helper gameEngine object
     gameEngine *gameEngineHelper = new gameEngine();
 
-    // booleans for quitting, winning and turn
+    // booleans for quitting, winning  
     // game will only loop if these are false
     bool quit = false;
     bool win = false;
-    bool playerOneTurn = true;
+
+    //boolean for which players turn
+    bool playerOneTurn = p1Starts;
 
     while (!win && !quit)
     {
@@ -147,7 +201,7 @@ void controller::runGame(Board *board, Player *player1, Player *player2, LinkedL
         {
             invalidTurn = false;
 
-            if (userTurn.length == 14)
+            if ((userTurn.length == 14) && (userTurn.substr(0,5) == "place"))
             { //i.e a place move
                 std::string tile = userTurn.substr(6, 2);
                 std::string position = userTurn.substr(12, 2);
@@ -177,7 +231,7 @@ void controller::runGame(Board *board, Player *player1, Player *player2, LinkedL
                 }
                 else
                 {
-                    std::cout << "Bag is empty";
+                    std::cout << "Bag is empty, you can not draw from it!\n";
                     invalidTurn = true;
                 }
             }
@@ -185,16 +239,23 @@ void controller::runGame(Board *board, Player *player1, Player *player2, LinkedL
             {
                 if ((userTurn.substr(0, 4) == "save"))
                 {
-                    gameEngineHelper->saveGame(userTurn.substr(6));
+                    gameEngineHelper->saveGame(userTurn.substr(6), player1, player2,
+                    playerOneTurn, bag, board);
                     quit = true;
                 }
-                std::cout << "Invalid Input";
+                else
+                {
+                    std::cout << "Invalid Input";
                 invalidTurn = true;
+                }
+                
+                
             }
         }
 
         // check bag or player hand
-        if ((bag->size == 0) || (player1->getHand()->size() == 0) || (player2->getHand()->size() == 0))
+        if ((bag->size == 0) || (player1->getHand()->size() == 0) || 
+        (player2->getHand()->size() == 0))
         {
             win = true;
             endGame(player1, player2);

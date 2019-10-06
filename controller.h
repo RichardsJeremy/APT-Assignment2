@@ -20,7 +20,8 @@ public:
 
     void loadGame();
 
-    void runGame(Board *board, Player *player1, Player *player2, LinkedList *bag);
+    void runGame(Board *board, Player *player1, Player *player2, LinkedList *bag,
+    bool p1Starts);
 
     void endGame(Player *player1, Player *player2);
 

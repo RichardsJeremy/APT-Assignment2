@@ -35,6 +35,7 @@ void gameEngine::saveGame(std::string saveGameName, Player *player1, Player *pla
         outfile << player2->getName() << "\n";
     }
     outfile.close();
+    std::cout << "Game successfully saved\n";
 }
 
 // places tile on board and removes from players hand
@@ -49,6 +50,7 @@ void gameEngine::placeTile(std::string tile, std::string pos, LinkedList *bag,
         player->hand->addBack(bag->removeFront());
     }
     // board place should return an int
+    // calling board->place() places the tile and returns the points of that move
     player->setPoints() = player->getScore() + board->place(tile, pos);
 }
 
@@ -57,6 +59,8 @@ void gameEngine::replaceTile(std::string tile, LinkedList *bag,
                              Player *player) 
     {
         player->hand->removeTile(tile);
+        // calling bag remove front return the tile being removed so it can be
+        // plaed straight into an add function.
         player->hand->addBack(bag->removeFront());
         bag->addBack(tile);
     }
