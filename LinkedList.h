@@ -10,6 +10,12 @@ public:
    LinkedList();
    ~LinkedList();
 
+   int getSize();
+   int getTilePos();
+   Tile getTile();
+   void addTileToBack();
+   void deleteTile();
+
 private:
    Node* head;
 };
