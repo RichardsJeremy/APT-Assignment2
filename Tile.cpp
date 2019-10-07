@@ -18,10 +18,24 @@ char Tile::getShape()
     return shape;
 }
 
-bool Tile::equals(Tile* inTile)
+bool Tile::equals(Tile* toCompare)
 {
-    if(this->getColour() == inTile->getColour())
-        if(this->getShape() == inTile->getShape())
+    if(this->getColour() == toCompare->getColour())
+        if(this->getShape() == toCompare->getShape())
             return true;
     return false;
+}
+
+bool Tile::related(Tile* toCompare)
+{
+    if(this->getColour() == toCompare->getColour())
+    {
+        if(this->getShape() != toCompare->getShape())
+            return true;
+        return false;
+    }        
+    if(this->getShape() == toCompare->getShape())
+        return true;
+    return false;
+
 }

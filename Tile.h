@@ -12,7 +12,8 @@ public:
     std::string toString();
     char getColour();
     char getShape();
-    bool equals(Tile* inTile);
+    bool equals(Tile* toCompare);
+    bool related(Tile* toCompare);
 };
 
 #endif // ASSIGN2_TILE_H
