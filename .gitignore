@@ -5,3 +5,4 @@ LinkedList_.*
 ll_test
 BasicTesting.cpp
 BasicTesting.exe
+*.vs
