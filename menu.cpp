@@ -15,7 +15,7 @@ void menu::printMenu()
 
 void menu::runMenu()
 {
-    controller *ctrl = new controller;
+    std::shared_ptr<controller> ctrl = std::make_shared<controller>();
     int choice = 0;
     do
     {

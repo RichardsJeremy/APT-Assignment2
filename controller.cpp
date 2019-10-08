@@ -59,11 +59,11 @@ void controller::newGame()
 
     // create blank players and board here with heap allocation and then pass
     // pointers onto runGame() method.
-    Board *board = new Board();
-    Player *player1 = new Player(playerOneName);
-    Player *player2 = new Player(playerTwoName);
-
-    LinkedList *bag = new LinkedList();
+	std::shared_ptr<Board> board = std::make_shared<Board>();
+	std::shared_ptr<Player> player1 = std::make_shared<Player>();
+	std::shared_ptr<Player> player2 = std::make_shared<Player>();
+	
+	std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
     createShuffledBag(bag);
 
     for (int i = 0; i < NUMBER_OF_TILES; i++)
@@ -115,8 +115,8 @@ void controller::loadGame()
         // secondary constructor for player will convert string into linked list
         std::string playerTwoHand = fileData[5];
 
-        Player *player1 = new Player(playerOneName, playerOneScore, playerOneHand);
-        Player *player2 = new Player(playerTwoName, playerTwoScore, playerTwoHand);
+		std::shared_ptr<Player> player1 = std::make_shared<Player>();
+		std::shared_ptr<Player> player2 = std::make_shared<Player>();
 
         std::string boardString = "";
         for (int i = 6; i < BOARD_HEIGHT; i++)
@@ -124,10 +124,10 @@ void controller::loadGame()
             boardString += fileData[i] + "\n";
         }
         //constructor for board takes in string input. 
-        Board *board = new Board(boardString);
+		std::shared_ptr<Board> board = std::make_shared<Board>();
         
         //constructor for list takes in string
-        LinkedList *bag = new LinkedList(16);
+		std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>(fileData[16]);
         if (fileData[17] == fileData[0])
         {
             p1Starts = true;
@@ -154,7 +154,7 @@ void controller::runGame(Board *board, Player *player1, Player *player2, LinkedL
 bool p1Starts)
 {
     // Creating helper gameEngine object
-    gameEngine *gameEngineHelper = new gameEngine();
+	std::shared_ptr<gameEngine> gameEngineHelper = std::make_shared<gameEngine>();
 
     // booleans for quitting, winning  
     // game will only loop if these are false
