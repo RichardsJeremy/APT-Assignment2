@@ -1,10 +1,6 @@
 #ifndef CONTROLLER_ASS_TWO
 #define CONTROLLER_ASS_TWO
 
-class Board;
-class Player;
-class LinkedList;
-
 class controller
 {
 private:
@@ -27,7 +23,7 @@ public:
 
     void showInformation();
 
-    void createShuffledBag(std::shared_ptr<LinkedList> bag);
+    void createBag(std::shared_ptr<LinkedList> bag);
 };
 
 #endif

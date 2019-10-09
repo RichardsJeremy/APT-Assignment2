@@ -20,12 +20,12 @@ void gameEngine::saveGame(std::string saveGameName, std::shared_ptr<Player> play
 
     outfile << player1->getName() << "\n";
     outfile << player1->getScore() << "\n";
-    outfile << player1->displayHand() << "\n";
+    outfile << player1->hand->toString() << "\n";
     outfile << player2->getName() << "\n";
     outfile << player1->getScore() << "\n";
-    outfile << player2->displayHand() << "\n";
-    outfile << board->displayFullBoard() << "\n";
-    outfile << bag->displayItems() << "\n";
+    outfile << player2->hand->toString() << "\n";
+    outfile << board->toString() << "\n";
+    outfile << bag->toString() << "\n";
     if (playerOneTurn)
     {
         outfile << player1->getName() << "\n";
@@ -39,28 +39,48 @@ void gameEngine::saveGame(std::string saveGameName, std::shared_ptr<Player> play
 }
 
 // places tile on board and removes from players hand
-void gameEngine::placeTile(std::string tile, std::string pos, std::shared_ptr<LinkedList> bag,
+bool gameEngine::placeTile(std::string tile, std::string pos, std::shared_ptr<LinkedList> bag,
                            std::shared_ptr<Board> board, std::shared_ptr<Player> player)
 {
-
-    player->hand->removeTile(tile);
+    bool validMove = false;
+    char colour = tile[0];
+    int shape = tile[1];
+    int tilePos = player->hand->getTilePos(shape, colour);
+    player->hand->deleteTile(tilePos);
     //remove front should return a string to be added to a hand
-    if (bag->size() > 0)
+    if (bag->getSize() > 0)
     {
-        player->hand->addBack(bag->removeFront());
+        int pickTile = rand() % (bag->getSize() + 1);
+        Tile tile = bag->getTile(pickTile);
+        player->hand->addTileToBack(&tile);
+        bag->deleteTile(pickTile);
     }
-    // board place should return an int
-    // calling board->place() places the tile and returns the points of that move
-    player->setPoints() = player->getScore() + board->place(tile, pos);
+
+    // place tile and get points to add to score.
+    int res = board->placeTile(tile[0], tile[1], pos[0], pos[1]);
+    player->addScore(res);
+
+    if (res > 0)
+    {
+        validMove = true;
+    }
 }
 
 // replaces tile in players hand
 void gameEngine::replaceTile(std::string tile, std::shared_ptr<LinkedList> bag,
-                             std::shared_ptr<Player> player) 
-    {
-        player->hand->removeTile(tile);
-        // calling bag remove front return the tile being removed so it can be
-        // plaed straight into an add function.
-        player->hand->addBack(bag->removeFront());
-        bag->addBack(tile);
-    }
+                             std::shared_ptr<Player> player)
+{
+    char colour = tile[0];
+    int shape = tile[1];
+    int tilePos = player->hand->getTilePos(shape, colour);
+    player->hand->deleteTile(tilePos);
+
+    // add tile to players hadn
+    int pickTile = rand() % (bag->getSize() + 1);
+    Tile tileToRemove = bag->getTile(pickTile);
+    player->hand->addTileToBack(&tileToRemove);
+    bag->deleteTile(pickTile);
+
+    Tile *tileToAdd = new Tile(shape, colour);
+    bag->addTileToBack(tileToAdd);
+}

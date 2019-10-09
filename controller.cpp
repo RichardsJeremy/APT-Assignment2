@@ -1,9 +1,10 @@
 #include "controller.h"
 #include "player.cpp"
-#include "board.cpp"
+#include "Board.h"
 #include "gameEngine.cpp"
 #include "LinkedList.cpp"
 #include <iostream>
+#include <stdlib.h>
 #include <iterator>
 #include <string>
 #include <vector>
@@ -64,12 +65,20 @@ void controller::newGame()
     std::shared_ptr<Player> player2 = std::make_shared<Player>();
 
     std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
-    createShuffledBag(bag);
+    createBag(bag);
 
     for (int i = 0; i < NUMBER_OF_TILES; i++)
     {
-        //TODO code to remove front tiles from bag and add
-        // to players hands.
+        int pickTile = rand() % (bag->getSize() + 1);
+        Tile tile = bag->getTile(pickTile);
+        player1->hand->addTileToBack(&tile); 
+        bag->deleteTile(pickTile);
+
+        pickTile = rand() % (bag->getSize() + 1);
+        tile = bag->getTile(pickTile);
+        player2->hand->addTileToBack(&tile); 
+        bag->deleteTile(pickTile);
+
     }
 
     runGame(board, player1, player2, bag, true);
@@ -177,16 +186,16 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
         std::cout << "Score for " << player1->getName() << ": " << player1->getScore();
         std::cout << "Score for " << player2->getName() << ": " << player2->getScore();
         std::cout << "\n";
-        board->display();
+        std::cout << board->toString();
         std::cout << "\n";
         std::cout << "Your hand is";
         if (playerOneTurn)
         {
-            player1->displayHand();
+            player1->hand->toString();
         }
         else
         {
-            player2->displayHand();
+            player2->hand->toString();
         }
         std::cout << "\n";
 
@@ -207,16 +216,22 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
 
                 if (playerOneTurn)
                 {
-                    gameEngineHelper->placeTile(tile, position, bag, board, player1);
+                    if(!(gameEngineHelper->placeTile(tile, position, bag, board, player1))) {
+                        invalidTurn = true;
+                        std::cout << "Please enter a valid move.\n";
+                    }
                 }
                 else
                 {
-                    gameEngineHelper->placeTile(tile, position, bag, board, player1);
+                   if(!(gameEngineHelper->placeTile(tile, position, bag, board, player1))) {
+                       invalidTurn = true;
+                       std::cout << "Please enter a valid move.\n";
+                   }
                 }
             }
             else if ((userTurn.length == 10) && (userTurn.substr(0, 7) == "replace")) //i.e. replace tile
             {
-                if (bag->size() > 0)
+                if (bag->getSize() > 0)
                 {
                     std::string tile = userTurn.substr(9, 2);
                     if (playerOneTurn)
@@ -311,7 +326,22 @@ void controller::showInformation()
     std::cout << "----------------------------------\n";
 }
 
-void controller::createShuffledBag(std::shared_ptr<LinkedList> bag)
+void controller::createBag(std::shared_ptr<LinkedList> bag)
 {
-    //TODO create shuffled bag.
+    char colours [6] = {'R', 'O', 'Y', 'G', 'B', 'P'};
+    int shapes [6] = {1,2,3,4,5,6};
+
+    for (int i = 0; i < NUMBER_OF_TILES; i++)
+    {
+        for (int j = 0; j < NUMBER_OF_TILES; j++)
+        {
+            Tile *tile1 = new Tile(colours[i],shapes[j]);
+            Tile *tile2 = new Tile(colours[i],shapes[j]);
+
+            bag->addTileToBack(tile1);
+            bag->addTileToBack(tile2);
+        }
+        
+    }
+    
 }

@@ -48,7 +48,7 @@ int LinkedList::getTilePos(int shape, char colour) {
 }
 
 //Adds a tile to the list.
-void LinkedList::addTileToBack() {
+void LinkedList::addTileToBack(Tile *tile) {
    Node* newTile = new Node(tile, nullptr);
    if (size > 1) {
 	  Node* tempTile = head;

@@ -14,9 +14,9 @@ public:
 
    int getSize();
    int getTilePos();
-   Tile getTile();
-   void addTileToBack();
-   void deleteTile();
+   Tile getTile(int pos);
+   void addTileToBack(Tile *tile);
+   void deleteTile(int pos);
    std::string toString();
 
 private:

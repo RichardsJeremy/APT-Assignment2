@@ -2,14 +2,16 @@
 #include "LinkedList.h"
 
 #include <iostream>
+#include "menu.cpp"
+#include "controller.cpp"
 
-#define EXIT_SUCCESS    0
+#define EXIT_SUCCESS 0
 
-int main(void) {
-   LinkedList* list = new LinkedList();
-   delete list;
+int main(void)
+{
 
-   std::cout << "TODO: Implement Qwirkle!" << std::endl;
+   menu *menuTest = new menu();
+   menuTest->runMenu();
 
    return EXIT_SUCCESS;
 }
