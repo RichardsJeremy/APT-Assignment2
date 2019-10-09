@@ -1,8 +1,6 @@
 #include "AI.h"
 
-AI::AI() {}
-
-std::string AI::getMove(Board board, LinkedList hand)// look at hand
+std::string AI::getMove(std::shared_ptr<Board> board, LinkedList hand)// look at hand
 {
 	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
 	if (!potentialMoves.empty)
@@ -16,7 +14,7 @@ std::string AI::getMove(Board board, LinkedList hand)// look at hand
 	return replace;
 }
 
-std::string AI::getMoveOptimal(Board board, LinkedList hand)
+std::string AI::getMoveOptimal(std::shared_ptr<Board> board, LinkedList hand)
 {
 	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
 	if (!potentialMoves.empty)
@@ -38,14 +36,14 @@ std::string AI::getMoveOptimal(Board board, LinkedList hand)
 	return replace;
 }
 
-std::vector<std::string> AI::getPotentialMoves(Board boardObj, LinkedList hand)	
+std::vector<std::string> AI::getPotentialMoves(std::shared_ptr<Board> boardObj, LinkedList hand)
 {
 	std::vector<std::string> potentialMoves;
 	//array for storing potential moves
 
-	int rows = boardObj.getYSize();
-	int cols = boardObj.getXSize();
-	Tile*** board = boardObj.getBoard;
+	int rows = boardObj->getYSize();
+	int cols = boardObj->getXSize();
+	Tile*** board = boardObj->getBoard;
 
 
 	for (int row = 0; row < rows; ++row)
@@ -79,7 +77,7 @@ std::vector<std::string> AI::getPotentialMoves(Board boardObj, LinkedList hand)
 	return potentialMoves;
 }
 
-std::string AI::getHint(Board board, LinkedList hand, Tile* tile) 
+std::string AI::getHint(std::shared_ptr<Board> board, LinkedList hand, Tile* tile)
 {
 	std::string tileStr = "Place " + tile->getColour() + tile->getShape();
 	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
