@@ -2,6 +2,8 @@
 #define BOARD_H
 
 #include "Tile.h"
+#include <iostream>
+#include <string>
 
 #define MAX_X  26
 #define MAX_Y  26
@@ -18,6 +20,7 @@ public:
    int validTile(char color, int shape, int xPos, int yPos);
    void expandBoard(int xPos, int yPos);
    void forceTile(char color, int shape, int xPos, int yPos);
+   Tile** getBoard();
    std::string toString();
 
 private:

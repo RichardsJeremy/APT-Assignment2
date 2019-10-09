@@ -43,7 +43,8 @@ int LinkedList::getTilePos(int shape, char colour) {
 			}
 		currentPos++;
 	}
-	return returnPos - 1;
+	returnPos -= 1;
+	return returnPos;
 }
 
 //Adds a tile to the list.
