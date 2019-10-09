@@ -11,7 +11,9 @@ std::string AI::getMove(Board board, LinkedList hand)// look at hand
 		return potentialMoves.at(pos);
 	}
 	int pos = rand() % 5;
-	return "replace " + hand.getTile(pos).getColour + hand.getTile(pos).getShape; //Change to pointer
+	std::string replace = "replace ";
+	replace += hand.getTile(pos)->toString();
+	return replace;
 }
 
 std::string AI::getMoveOptimal(Board board, LinkedList hand)
@@ -31,7 +33,9 @@ std::string AI::getMoveOptimal(Board board, LinkedList hand)
 		return bestMove;
 	}
 	int pos = rand() % 5;
-	return "replace " + hand.getTile(pos).getColour + hand.getTile(pos).getShape; //Change to pointer
+	std::string replace = "replace ";
+	replace += hand.getTile(pos)->toString();
+	return replace;
 }
 
 std::vector<std::string> AI::getPotentialMoves(Board boardObj, LinkedList hand)	
@@ -61,7 +65,7 @@ std::vector<std::string> AI::getPotentialMoves(Board boardObj, LinkedList hand)
 						//Loops over potential empty spaces adjacent to the filled space.
 						for (int i = 0; i < hand.getSize(); ++i)
 						{
-							Tile* pieceInHand = &hand.getTile(i); //Change to pointer
+							Tile* pieceInHand = hand.getTile(i); //Change to pointer
 							if (pieceInHand->related(board[row][col]))
 								//Loops through hand to find a related tile
 							{

@@ -65,7 +65,7 @@ int Board::placeTile(char color, int shape, int xPos, int yPos)
 }
 
 //Validates whether the move is valid and returns the score.
-int Board:validTile(char color, int shape, int xPos, int yPos)
+int Board::validTile(char color, int shape, int xPos, int yPos)
 {
    int returnPoints = 0;
    int currentPos = 1;

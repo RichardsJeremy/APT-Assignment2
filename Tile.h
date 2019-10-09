@@ -11,7 +11,7 @@ public:
     Tile(char colour_, int shape_);
     std::string toString();
     char getColour();
-    char getShape();
+    int getShape();
     bool equals(Tile* toCompare);
     bool related(Tile* toCompare);
 };

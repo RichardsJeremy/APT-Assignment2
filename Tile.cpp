@@ -13,7 +13,7 @@ char Tile::getColour()
     return colour;
 }
 
-char Tile::getShape()
+int Tile::getShape()
 {
     return shape;
 }

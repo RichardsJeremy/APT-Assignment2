@@ -64,7 +64,7 @@ void controller::newGame()
     std::shared_ptr<Player> player1 = std::make_shared<Player>();
     player1->setName(playerOneName);
     std::shared_ptr<Player> player2 = std::make_shared<Player>();
-player2->setName(playerTwoName);
+	player2->setName(playerTwoName);
     std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
     createBag(bag);
 
