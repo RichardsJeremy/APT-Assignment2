@@ -87,3 +87,19 @@ void LinkedList::deleteTile(int tilePos) {
 	}
 	size--;
 }
+//To String Method.
+void LinkedList::toString() {
+   std::string toReturn = "";
+   for (int i = 0, i < size, i++)
+   {
+      if (i == 0)
+      {
+         toReturn.append(tile[y][x]->toString());
+	  }
+	  else
+	  {
+         toReturn.append(", " + tile[y][x]->toString());
+	  }
+   return toReturn;
+   
+}

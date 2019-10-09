@@ -17,6 +17,7 @@ public:
    Tile getTile();
    void addTileToBack();
    void deleteTile();
+   std::string toString();
 
 private:
    Node* head;
