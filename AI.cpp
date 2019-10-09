@@ -2,9 +2,9 @@
 
 AI::AI() {}
 
-std::string AI::getMove(Tile** board, LinkedList hand, int rows, int cols)
+std::string AI::getMove(Board board, LinkedList hand)// look at hand
 {
-	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand, rows, cols);
+	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
 	if (!potentialMoves.empty)
 	{
 		int pos = rand % (potentialMoves.size - 1);
@@ -14,9 +14,9 @@ std::string AI::getMove(Tile** board, LinkedList hand, int rows, int cols)
 	return "replace " + hand.getTile(pos).getColour + hand.getTile(pos).getShape; //Change to pointer
 }
 
-std::string AI::getMoveOptimal(Tile** board, LinkedList hand, int rows, int cols)
+std::string AI::getMoveOptimal(Board board, LinkedList hand)
 {
-	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand, rows, cols);
+	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
 	if (!potentialMoves.empty)
 	{
 		std::string bestMove = potentialMoves.at(0);
@@ -34,11 +34,15 @@ std::string AI::getMoveOptimal(Tile** board, LinkedList hand, int rows, int cols
 	return "replace " + hand.getTile(pos).getColour + hand.getTile(pos).getShape; //Change to pointer
 }
 
-std::vector<std::string> AI::getPotentialMoves(Tile** board, LinkedList hand, int rows, int cols) 
+std::vector<std::string> AI::getPotentialMoves(Board boardObj, LinkedList hand)	
 {
 	std::vector<std::string> potentialMoves;
-
 	//array for storing potential moves
+
+	int rows = boardObj.getYSize();
+	int cols = boardObj.getXSize();
+	Tile*** board = boardObj.getBoard;
+
 
 	for (int row = 0; row < rows; ++row)
 	{
@@ -46,7 +50,7 @@ std::vector<std::string> AI::getPotentialMoves(Tile** board, LinkedList hand, in
 		if (row % 2 == 0)
 			startCol = 0;
 		for (int col = startCol; col < cols; ++col)
-			if (isFilled(&board[row][col]))
+			if (isFilled(board[row][col]))
 				//Loops over board to find a space filled with a piece.
 			{
 				std::pair<int, int> filledSpace(row, col);
@@ -58,7 +62,7 @@ std::vector<std::string> AI::getPotentialMoves(Tile** board, LinkedList hand, in
 						for (int i = 0; i < hand.getSize(); ++i)
 						{
 							Tile* pieceInHand = &hand.getTile(i); //Change to pointer
-							if (pieceInHand->related(&(board[row][col])))//Change to pointer
+							if (pieceInHand->related(board[row][col]))
 								//Loops through hand to find a related tile
 							{
 								//if placeable
@@ -71,10 +75,10 @@ std::vector<std::string> AI::getPotentialMoves(Tile** board, LinkedList hand, in
 	return potentialMoves;
 }
 
-std::string AI::getHint(Tile** board, LinkedList hand, int rows, int cols, Tile* tile) 
+std::string AI::getHint(Board board, LinkedList hand, Tile* tile) 
 {
 	std::string tileStr = "Place " + tile->getColour() + tile->getShape();
-	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand, rows, cols);
+	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
 	for (auto i = potentialMoves.begin(); i != potentialMoves.end(); ++i) 
 	{
 		std::string potentialMove = *i;
@@ -90,7 +94,7 @@ std::string AI::getHint(Tile** board, LinkedList hand, int rows, int cols, Tile*
 	return "no valid move for tile" + tile->getColour() + tile->getShape();
 }
 
-std::pair<int, int> AI::getAdjacentSpace(Tile** board, int direction, std::pair<int, int> space)
+std::pair<int, int> AI::getAdjacentSpace(Tile*** board, int direction, std::pair<int, int> space)
 {
 	if (direction == NW) 
 	{
@@ -115,9 +119,9 @@ std::pair<int, int> AI::getAdjacentSpace(Tile** board, int direction, std::pair<
 	return space;
 }
 
-Tile * AI::getTile(Tile** board, std::pair<int, int> space) 
+Tile * AI::getTile(Tile*** board, std::pair<int, int> space)
 {
-	return & board[std::get<0>(space)][std::get<1>(space)];
+	return board[std::get<0>(space)][std::get<1>(space)];
 }
 
 int AI::getOppositeDirection(int direction) 

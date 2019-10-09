@@ -3,6 +3,7 @@
 #include <vector>
 #include "Tile.h"
 #include "LinkedList.h"
+#include "Board.h"
 #define openTile	nullptr
 #define NW	0
 #define NE	1
@@ -14,13 +15,13 @@ class AI
 {
 public:
 	AI();
-	std::string getMove(Tile** board, LinkedList hand, int rows, int cols);
-	std::string getMoveOptimal(Tile** board, LinkedList hand, int rows, int cols);
-	std::string getHint(Tile** board, LinkedList hand, int rows, int cols, Tile* tile);
+	std::string getMove(Board board, LinkedList hand);
+	std::string getMoveOptimal(Board board, LinkedList hand);
+	std::string getHint(Board board, LinkedList hand, Tile* tile);
 private:
-	std::vector<std::string> getPotentialMoves(Tile** board, LinkedList hand, int rows, int cols);
-	std::pair<int,int> getAdjacentSpace(Tile** board, int direction, std::pair<int, int> space);
-	Tile * getTile(Tile** board, std::pair<int, int> space);
+	std::vector<std::string> getPotentialMoves(Board boardObj, LinkedList hand);
+	std::pair<int,int> getAdjacentSpace(Tile*** board, int direction, std::pair<int, int> space);
+	Tile * getTile(Tile*** board, std::pair<int, int> space);
 	int getOppositeDirection(int direction);
 	std::string getPlaceCommand(Tile* tile, std::pair<int, int> space);
 	bool isFilled(Tile * tile);
