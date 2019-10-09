@@ -1,7 +1,5 @@
 #include "AI.h"
 
-
-
 AI::AI() {}
 
 std::string AI::getMove(Tile** board, LinkedList hand, int rows, int cols)
@@ -11,6 +9,26 @@ std::string AI::getMove(Tile** board, LinkedList hand, int rows, int cols)
 	{
 		int pos = rand % (potentialMoves.size - 1);
 		return potentialMoves.at(pos);
+	}
+	int pos = rand() % 5;
+	return "replace " + hand.getTile(pos).getColour + hand.getTile(pos).getShape; //Change to pointer
+}
+
+std::string AI::getMoveOptimal(Tile** board, LinkedList hand, int rows, int cols)
+{
+	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand, rows, cols);
+	if (!potentialMoves.empty)
+	{
+		std::string bestMove = potentialMoves.at(0);
+		int bestMovePoints = 0;
+		for (auto i = potentialMoves.begin(); i != potentialMoves.end(); ++i)
+		{
+			std::string potentialMove = *i;
+			int getPoints = 0;
+			if(getPoints > bestMovePoints)
+				bestMove = potentialMove;
+		}
+		return bestMove;
 	}
 	int pos = rand() % 5;
 	return "replace " + hand.getTile(pos).getColour + hand.getTile(pos).getShape; //Change to pointer
@@ -43,46 +61,13 @@ std::vector<std::string> AI::getPotentialMoves(Tile** board, LinkedList hand, in
 							if (pieceInHand->related(&(board[row][col])))//Change to pointer
 								//Loops through hand to find a related tile
 							{
-								bool adjacentSpacesRelated = true;
-								for (int directionFromEmpty = NW; directionFromEmpty <= SW; ++directionFromEmpty)
-								{
-									std::pair<int, int> spaceToCheck = getAdjacentSpace(board, directionFromEmpty, emptySpace);
-									Tile* toCheck = getTile(board, spaceToCheck);
-									if (!pieceInHand->related(toCheck))
-										adjacentSpacesRelated = false;
-								}
-								if (adjacentSpacesRelated)
-								{
-									bool validMove = true;
-									//int potentialPoints = 0;
-									for (int directionFromEmpty = NW; directionFromEmpty <= SW; ++directionFromEmpty)
-									{
-										std::pair<int, int> spaceToCheck = getAdjacentSpace(board, directionFromEmpty, emptySpace);
-										Tile* toCheck = getTile(board, spaceToCheck);
-										//int adjacentPoints = 0;
-										while (&toCheck && validMove)
-										{
-											if (toCheck->equals(pieceInHand))
-												validMove = false;
-											spaceToCheck = getAdjacentSpace(board, directionFromEmpty, spaceToCheck);
-											toCheck = getTile(board, spaceToCheck);
-											//adjacentPoints++;
-											//if(adjacentPoints == 5)
-
-										}
-									}
-									if (validMove)
-									{
-										potentialMoves.push_back(getPlaceCommand(pieceInHand, emptySpace));
-									}
-								}
-								
+								//if placeable
+								potentialMoves.push_back(getPlaceCommand(pieceInHand, emptySpace));
 							}
 						}
 				}
 			}
 	}
-
 	return potentialMoves;
 }
 
@@ -102,8 +87,7 @@ std::string AI::getHint(Tile** board, LinkedList hand, int rows, int cols, Tile*
 			return potentialMove;
 		}
 	}
-		
-
+	return "no valid move for tile" + tile->getColour() + tile->getShape();
 }
 
 std::pair<int, int> AI::getAdjacentSpace(Tile** board, int direction, std::pair<int, int> space)
@@ -164,3 +148,35 @@ bool AI::isFilled(Tile * tile)
 }
 
 
+/*
+bool adjacentSpacesRelated = true;
+for (int directionFromEmpty = NW; directionFromEmpty <= SW; ++directionFromEmpty)
+{
+	std::pair<int, int> spaceToCheck = getAdjacentSpace(board, directionFromEmpty, emptySpace);
+	Tile* toCheck = getTile(board, spaceToCheck);
+	if (!pieceInHand->related(toCheck))
+		adjacentSpacesRelated = false;
+}
+if (adjacentSpacesRelated)
+{
+	bool validMove = true;
+	//int potentialPoints = 0;
+	for (int directionFromEmpty = NW; directionFromEmpty <= SW; ++directionFromEmpty)
+	{
+		std::pair<int, int> spaceToCheck = getAdjacentSpace(board, directionFromEmpty, emptySpace);
+		Tile* toCheck = getTile(board, spaceToCheck);
+		//int adjacentPoints = 0;
+		while (&toCheck && validMove)
+		{
+			if (toCheck->equals(pieceInHand))
+				validMove = false;
+			spaceToCheck = getAdjacentSpace(board, directionFromEmpty, spaceToCheck);
+			toCheck = getTile(board, spaceToCheck);
+			//adjacentPoints++;
+			//if(adjacentPoints == 5)
+
+		}
+	}
+	if (validMove)
+	{
+*/
