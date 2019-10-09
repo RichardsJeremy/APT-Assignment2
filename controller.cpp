@@ -59,11 +59,11 @@ void controller::newGame()
 
     // create blank players and board here with heap allocation and then pass
     // pointers onto runGame() method.
-	std::shared_ptr<Board> board = std::make_shared<Board>();
-	std::shared_ptr<Player> player1 = std::make_shared<Player>();
-	std::shared_ptr<Player> player2 = std::make_shared<Player>();
-	
-	std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
+    std::shared_ptr<Board> board = std::make_shared<Board>();
+    std::shared_ptr<Player> player1 = std::make_shared<Player>();
+    std::shared_ptr<Player> player2 = std::make_shared<Player>();
+
+    std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
     createShuffledBag(bag);
 
     for (int i = 0; i < NUMBER_OF_TILES; i++)
@@ -86,20 +86,19 @@ void controller::loadGame()
     std::cin >> fileName;
 
     // file is 18 lines long for all data
-    std::string fileData [18];
+    std::string fileData[18];
     int loopCounter = 0;
     std::string line;
-    std::ifstream saveFile (fileName);
+    std::ifstream saveFile(fileName);
 
     //declaing bool for who starts
     bool p1Starts = true;
 
-
     if (saveFile.is_open())
     {
-        while (! saveFile.eof())
+        while (!saveFile.eof())
         {
-            std::getline(saveFile,line);
+            std::getline(saveFile, line);
             fileData[loopCounter] = line;
             loopCounter++;
         }
@@ -115,28 +114,28 @@ void controller::loadGame()
         // secondary constructor for player will convert string into linked list
         std::string playerTwoHand = fileData[5];
 
-		std::shared_ptr<Player> player1 = std::make_shared<Player>();
-		std::shared_ptr<Player> player2 = std::make_shared<Player>();
+        std::shared_ptr<Player> player1 = std::make_shared<Player>();
+        std::shared_ptr<Player> player2 = std::make_shared<Player>();
 
         std::string boardString = "";
         for (int i = 6; i < BOARD_HEIGHT; i++)
         {
             boardString += fileData[i] + "\n";
         }
-        //constructor for board takes in string input. 
-		std::shared_ptr<Board> board = std::make_shared<Board>();
-        
+        //constructor for board takes in string input.
+        std::shared_ptr<Board> board = std::make_shared<Board>();
+
         //constructor for list takes in string
-		std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>(fileData[16]);
+        std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>(fileData[16]);
         if (fileData[17] == fileData[0])
         {
             p1Starts = true;
         }
         else
         {
-             p1Starts = false;
+            p1Starts = false;
         }
-                
+
         std::cout << "Quirkle game successfully loaded ";
         runGame(board, player1, player2, bag, p1Starts);
         // TODO implment loading into various form to create board and players.
@@ -150,13 +149,13 @@ void controller::loadGame()
 /*This method takes in a the neccessary objects to run the gaem and then loops 
 with a while loop until a player wins or quits
 */
-void controller::runGame(Board *board, Player *player1, Player *player2, LinkedList *bag,
-bool p1Starts)
+void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> player1, std::shared_ptr<Player> player2,
+                         std::shared_ptr<LinkedList> bag, bool p1Starts)
 {
     // Creating helper gameEngine object
-	std::shared_ptr<gameEngine> gameEngineHelper = std::make_shared<gameEngine>();
+    std::shared_ptr<gameEngine> gameEngineHelper = std::make_shared<gameEngine>();
 
-    // booleans for quitting, winning  
+    // booleans for quitting, winning
     // game will only loop if these are false
     bool quit = false;
     bool win = false;
@@ -201,7 +200,7 @@ bool p1Starts)
         {
             invalidTurn = false;
 
-            if ((userTurn.length == 14) && (userTurn.substr(0,5) == "place"))
+            if ((userTurn.length == 14) && (userTurn.substr(0, 5) == "place"))
             { //i.e a place move
                 std::string tile = userTurn.substr(6, 2);
                 std::string position = userTurn.substr(12, 2);
@@ -240,22 +239,20 @@ bool p1Starts)
                 if ((userTurn.substr(0, 4) == "save"))
                 {
                     gameEngineHelper->saveGame(userTurn.substr(6), player1, player2,
-                    playerOneTurn, bag, board);
+                                               playerOneTurn, bag, board);
                     quit = true;
                 }
                 else
                 {
                     std::cout << "Invalid Input";
-                invalidTurn = true;
+                    invalidTurn = true;
                 }
-                
-                
             }
         }
 
         // check bag or player hand
-        if ((bag->size == 0) || (player1->getHand()->size() == 0) || 
-        (player2->getHand()->size() == 0))
+        if ((bag->size == 0) || (player1->getHand()->size() == 0) ||
+            (player2->getHand()->size() == 0))
         {
             win = true;
             endGame(player1, player2);
@@ -275,7 +272,7 @@ bool p1Starts)
 }
 
 //End of game and restarts menu and deletes save if there was one.
-void controller::endGame(Player *player1, Player *player2)
+void controller::endGame(std::shared_ptr<Player> player1, std::shared_ptr<Player> player2)
 {
 
     std::cout << "Game over\n";
@@ -314,7 +311,7 @@ void controller::showInformation()
     std::cout << "----------------------------------\n";
 }
 
-void controller::createShuffledBag(LinkedList *bag)
+void controller::createShuffledBag(std::shared_ptr<LinkedList> bag)
 {
     //TODO create shuffled bag.
 }

@@ -20,15 +20,14 @@ public:
 
     void loadGame();
 
-    void runGame(Board *board, Player *player1, Player *player2, LinkedList *bag,
-    bool p1Starts);
+    void runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> player1, std::shared_ptr<Player> player2,
+                 std::shared_ptr<LinkedList> bag, bool p1Starts);
 
-    void endGame(Player *player1, Player *player2);
+    void endGame(std::shared_ptr<Player> player1, std::shared_ptr<Player> player2);
 
     void showInformation();
 
-    void createShuffledBag(LinkedList *bag);
+    void createShuffledBag(std::shared_ptr<LinkedList> bag);
 };
-
 
 #endif
