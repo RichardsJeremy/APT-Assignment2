@@ -35,12 +35,6 @@ void Player::addScore(int amount)
   *score += amount;
 }
 
-// Would be used if implementing an undo function
-void Player::subtractScore(int amount)
-{
-  *score -= amount;
-}
-
 // Returns the player's score
 int Player::getScore()
 {
