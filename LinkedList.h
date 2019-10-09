@@ -13,14 +13,15 @@ public:
    ~LinkedList();
 
    int getSize();
-   int getTilePos();
-   Tile getTile(int pos);
+   int getTilePos(int shape, char colour);
+   Tile * getTile(int pos);
    void addTileToBack(Tile *tile);
    void deleteTile(int pos);
    std::string toString();
 
 private:
    Node* head;
+   int size;
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

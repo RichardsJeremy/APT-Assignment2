@@ -12,7 +12,7 @@ LinkedList::LinkedList() {
 //Destructor, deletes each item.
 LinkedList::~LinkedList() {
    for (int i = 0; i<size; i++) {
-      delete get(i);
+      delete getTile(i);
    }
    head = nullptr;
 }
@@ -23,7 +23,7 @@ int LinkedList::getSize() {
 }
 
 //Returns a tile.
-Tile LinkedList::getTile(int tilePos) {
+Tile * LinkedList::getTile(int tilePos) {
 	Node* tileNode = head;
 	for (int i = 0; i<tilePos; i++) {
 		tileNode = tileNode->next;
@@ -33,18 +33,18 @@ Tile LinkedList::getTile(int tilePos) {
 
 //Returns a tile position.
 int LinkedList::getTilePos(int shape, char colour) {
+	Tile toFind = Tile(colour, shape);
 	Node* tileNode = head;
-	int returnPos = 0;
 	int currentPos = 0;
-	while (tempNode != nullptr) {
-		if (returnPos == 0;)
-			if (tempNode->tile->getShape() == shape && tempNode->tile->getColour() == colour) {
-				returnPos = currentPos;
-			}
+	while (tileNode != nullptr) {
+		if (tileNode->tile->equals(&toFind)) 
+		{
+			return currentPos;
+		}
 		currentPos++;
+		tileNode = tileNode->next;
 	}
-	returnPos -= 1;
-	return returnPos;
+	return NULL;
 }
 
 //Adds a tile to the list.
@@ -67,39 +67,28 @@ void LinkedList::addTileToBack(Tile *tile) {
 
 //Deletes the Tile at position.
 void LinkedList::deleteTile(int tilePos) {
-	Node* tileNode = head;
+	Node* previousNode = head;
+	Node* toDelete = head;
 	for (int i = 0; i<tilePos; i++) {
-		tileNode = tileNode->next;
+		previousNode = toDelete;
+		toDelete = toDelete->next;
 	}
-	Node* toDelete = tileNode->next;
-	if (toDelete->next != nullptr) {
-		tileNode->next = toDelete->next;
-		delete toDelete;
-		while (tempTile->next != nullptr) {
-			toDelete = tileNode->next;
-			tileNode->next = toDelete->next;
-			delete toDelete;
-		}
+	if (toDelete->next) 
+	{
+		previousNode->next = toDelete->next;
 	}
-	else {
-		tileNode->next = toDelete->next;
-		delete toDelete;
-	}
+	delete toDelete;
 	size--;
 }
 //To String Method.
-void LinkedList::toString() {
+std::string LinkedList::toString() 
+{
    std::string toReturn = "";
-   for (int i = 0, i < size, i++)
+   Node* node = head;
+   while (node) 
    {
-      if (i == 0)
-      {
-         toReturn.append(tile[y][x]->toString());
-	  }
-	  else
-	  {
-         toReturn.append(", " + tile[y][x]->toString());
-	  }
+	   toReturn += ",";
+	   toReturn += node->tile->toString();
+   }
    return toReturn;
-   
 }
