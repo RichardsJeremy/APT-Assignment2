@@ -14,7 +14,6 @@ public:
   std::string getName();
 
   void addScore(int amount);
-  void subtractScore(int amount);
   int getScore();
     
   std::string playerInformation();
