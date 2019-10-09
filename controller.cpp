@@ -52,7 +52,7 @@ void controller::newGame()
     std::string playerOneName = "";
     std::cin >> playerOneName;
 
-    std::cout << "\nEnter a name for player 2 (uppercase characters only)\n";
+    std::cout << "\nEnter a name for player 2 (uppercase characters only)\n (Enter 'AI' for an AI Character)\n";
     std::string playerTwoName = "";
     std::cin >> playerTwoName;
 
@@ -62,8 +62,9 @@ void controller::newGame()
     // pointers onto runGame() method.
     std::shared_ptr<Board> board = std::make_shared<Board>();
     std::shared_ptr<Player> player1 = std::make_shared<Player>();
+    player1->setName(playerOneName);
     std::shared_ptr<Player> player2 = std::make_shared<Player>();
-
+player2->setName(playerTwoName);
     std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
     createBag(bag);
 
@@ -80,8 +81,14 @@ void controller::newGame()
         bag->deleteTile(pickTile);
 
     }
-
-    runGame(board, player1, player2, bag, true);
+    if(player2->getName() == "AI") {
+    runGame(board, player1, player2, bag, true, true);
+    }
+    else
+    {
+        runGame(board, player1, player2, bag, true, false);
+    }
+    
 }
 
 /* This method reads in input from a saved file to create a new gameEngine object with
@@ -159,7 +166,7 @@ void controller::loadGame()
 with a while loop until a player wins or quits
 */
 void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> player1, std::shared_ptr<Player> player2,
-                         std::shared_ptr<LinkedList> bag, bool p1Starts)
+                         std::shared_ptr<LinkedList> bag, bool p1Starts, bool AIPlayerEnabled)
 {
     // Creating helper gameEngine object
     std::shared_ptr<gameEngine> gameEngineHelper = std::make_shared<gameEngine>();
@@ -207,7 +214,31 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
 
         while (invalidTurn)
         {
-            invalidTurn = false;
+            if(!playerOneTurn && AIPlayerEnabled) {
+                    //MAXWELL -- INSERT YOUR CODE HERE
+
+
+                    /*
+
+
+
+                    MAXES CODE FOR AI
+
+                    Just needs one turn - i.e. place tile or replace tile. The hand of the player is player2
+                    to make it work with my existing function use this code below. All you have to do is replace the 
+                    tile and position with strings of the tile (Y1) or position (A1)
+
+                    gameEngineHelper->placeTile(tile, position, bag, board, player2)
+
+                    if replaceing use this one where tile is also a string
+
+                    gameEngineHelper->replaceTile(tile, bag, player2)
+
+                    */
+            }
+            else
+            {
+                invalidTurn = false;
 
             if ((userTurn.length == 14) && (userTurn.substr(0, 5) == "place"))
             { //i.e a place move
@@ -263,11 +294,13 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
                     invalidTurn = true;
                 }
             }
+            }
+            
         }
 
         // check bag or player hand
-        if ((bag->size == 0) || (player1->getHand()->size() == 0) ||
-            (player2->getHand()->size() == 0))
+        if ((bag->getSize() == 0) || (player1->hand->getSize() == 0) ||
+            (player2->hand->getSize() == 0))
         {
             win = true;
             endGame(player1, player2);
@@ -295,11 +328,11 @@ void controller::endGame(std::shared_ptr<Player> player1, std::shared_ptr<Player
     std::cout << "Score for " << player2->getName() << ": " << player2->getScore() << "\n";
     if (player1->getScore() > player2->getScore())
     {
-        std::cout << "Player" << player1->getName() << " won!";
+        std::cout << "Player" << player1->getName() << " won!\n";
     }
     else
     {
-        std::cout << "Player" << player2->getName() << " won!";
+        std::cout << "Player" << player2->getName() << " won!\n";
     }
 }
 

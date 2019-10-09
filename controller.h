@@ -17,7 +17,7 @@ public:
     void loadGame();
 
     void runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> player1, std::shared_ptr<Player> player2,
-                 std::shared_ptr<LinkedList> bag, bool p1Starts);
+                 std::shared_ptr<LinkedList> bag, bool p1Starts, bool aIEnabled);
 
     void endGame(std::shared_ptr<Player> player1, std::shared_ptr<Player> player2);
 
