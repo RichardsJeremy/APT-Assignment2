@@ -3,9 +3,10 @@
 class Player{
   std::string* name;
   int* score;
-  LinkedList* hand;
 
 public:
+  LinkedList* hand;
+
   Player();
   ~Player();
 
@@ -16,5 +17,5 @@ public:
   void subtractScore(int amount);
   int getScore();
     
-  void printInformation();
+  std::string playerInformation();
 };
