@@ -200,7 +200,7 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
         std::cout << "\n";
 
         std::string userTurn = "";
-        std::cin >> userTurn;
+        std::getline(std::cin, userTurn);
 
         //bool to redo turn until valid input is entered
         bool invalidTurn = true;

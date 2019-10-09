@@ -15,6 +15,7 @@ class AI
 public:
 	AI();
 	std::string getMove(Tile** board, LinkedList hand, int rows, int cols);
+	std::string getMoveOptimal(Tile** board, LinkedList hand, int rows, int cols);
 	std::string getHint(Tile** board, LinkedList hand, int rows, int cols, Tile* tile);
 private:
 	std::vector<std::string> getPotentialMoves(Tile** board, LinkedList hand, int rows, int cols);
