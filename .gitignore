@@ -6,4 +6,10 @@ ll_test
 BasicTesting.cpp
 BasicTesting.exe
 *.vs
+Debug
+*.sln
+*.vcxproj
+*.json
 LiamsList.txt
+*.filters
+*.user

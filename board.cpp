@@ -16,6 +16,7 @@ Board::Board(int xSize, int ySize)
          tile[y][x] = nullptr;
       }
    }
+
 }
 
 //Desctructor
