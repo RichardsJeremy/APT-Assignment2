@@ -16,11 +16,11 @@ public:
    ~Board();
    int getXSize();
    int getYSize();
-   int placeTile(char color, int shape, int xPos, int yPos);
-   int validTile(char color, int shape, int xPos, int yPos);
+   int placeTile(char colour, int shape, int xPos, int yPos);
+   int validTile(char colour, int shape, int xPos, int yPos);
    void expandBoard(int xPos, int yPos);
-   void forceTile(char color, int shape, int xPos, int yPos);
-   Tile** getBoard();
+   void forceTile(char colour, int shape, int xPos, int yPos);
+   Tile*** getBoard();
    std::string toString();
 
 private:
