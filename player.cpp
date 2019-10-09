@@ -1,54 +1,50 @@
 #include "player.h"
+#include <iostream>
 
 Player::Player()
 {
-    name = "";
-    score = 0;
-    hand::LinkedList();
+  name = nullptr;
+  *score = 0;
+  *hand = LinkedList();
 }
 
 Player::~Player()
 {
-    name = NULL;
-    score = NULL;
-    hand::deleteList();
+  delete name;
+  delete score;
+  delete hand;
 }
 
 void Player::setName(std::string _name)
 {
-    name = _name;
+  *name = _name;
 }
 
 std::string Player::getName()
 {
-    return name;
+  return *name;
 }
 
 void Player::addScore(int amount)
 {
-    score += amount;
+  *score += amount;
 }
 
 // Would be used if implementing an undo function
 void Player::subtractScore(int amount)
 {
-    score -= amount;
+  *score -= amount;
 }
 
 int Player::getScore()
 {
-    return score;
-}
-
-void Player::displayHand()
-{
-    //TODO Will iterate through each Node of the hand and print the data, seperated by commas.
+  return *score;
 }
 
 // Prints the information in the save file format
 void Player::printInformation()
 {
-    std::cout << name << std::endl;
-    std::cout << score << std::endl;
-    this.displayHand();
+  std::cout << *name << std::endl;
+  std::cout << *score << std::endl;
+  std::cout << hand->toString() << std::endl;
 }
