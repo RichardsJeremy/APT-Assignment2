@@ -5,9 +5,9 @@ AI::AI() {}
 std::string AI::getMove(Board board, LinkedList hand)// look at hand
 {
 	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
-	if (!potentialMoves.empty)
+	if (!potentialMoves.empty())
 	{
-		int pos = rand % (potentialMoves.size - 1);
+		int pos = rand() % (potentialMoves.size() - 1);
 		return potentialMoves.at(pos);
 	}
 	int pos = rand() % 5;
@@ -19,7 +19,7 @@ std::string AI::getMove(Board board, LinkedList hand)// look at hand
 std::string AI::getMoveOptimal(Board board, LinkedList hand)
 {
 	std::vector<std::string> potentialMoves = getPotentialMoves(board, hand);
-	if (!potentialMoves.empty)
+	if (!potentialMoves.empty())
 	{
 		std::string bestMove = potentialMoves.at(0);
 		int bestMovePoints = 0;
@@ -45,7 +45,7 @@ std::vector<std::string> AI::getPotentialMoves(Board boardObj, LinkedList hand)
 
 	int rows = boardObj.getYSize();
 	int cols = boardObj.getXSize();
-	Tile*** board = boardObj.getBoard;
+	Tile*** board = boardObj.getBoard();
 
 
 	for (int row = 0; row < rows; ++row)

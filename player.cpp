@@ -1,44 +1,44 @@
 #include "player.h"
-#include <iostream>
+
 
 // Constructor
-Player::Player()
+Player::Player(std::string setName)
 {
-  name = nullptr;
-  *score = 0;
-  *hand = LinkedList();
+  this->name = setName;
+  this->score = 0;
+  hand = new LinkedList();
 }
 
 // Destructor
 Player::~Player()
 {
-  delete name;
-  delete score;
+  delete &name;
+  delete &score;
   delete hand;
 }
 
 // Used to set the name of a Player
 void Player::setName(std::string _name)
 {
-  *name = _name;
+  this->name = _name;
 }
 
 // Returns the player's name
 std::string Player::getName()
 {
-  return *name;
+  return name;
 }
 
 // Used to add to a player's total score
 void Player::addScore(int amount)
 {
-  *score += amount;
+  this->score += amount;
 }
 
 // Returns the player's score
 int Player::getScore()
 {
-  return *score;
+  return score;
 }
 
 // Prints the information in the save file format

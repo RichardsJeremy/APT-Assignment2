@@ -23,9 +23,9 @@ int LinkedList::getSize() {
 }
 
 //Returns a tile.
-Tile * LinkedList::getTile(int tilePos) {
+Tile* LinkedList::getTile(int tilePos) {
 	Node* tileNode = head;
-	for (int i = 0; i<tilePos; i++) {
+	for (int i = 0; i < tilePos - 1; i++) {
 		tileNode = tileNode->next;
 	}
 	return tileNode->tile;
@@ -48,9 +48,9 @@ int LinkedList::getTilePos(int shape, char colour) {
 }
 
 //Adds a tile to the list.
-void LinkedList::addTileToBack(Tile *tile) {
+void LinkedList::addTileToBack(Tile* tile) {
    Node* newTile = new Node(tile, nullptr);
-   if (size > 1) {
+   if (size > 2) {
 	  Node* tempTile = head;
 	  while (tempTile->next != nullptr) {
 		 tempTile = tempTile->next;
@@ -63,6 +63,7 @@ void LinkedList::addTileToBack(Tile *tile) {
    else {
 	  head = newTile;
    }
+   size++;
 }
 
 //Deletes the Tile at position.
@@ -83,12 +84,11 @@ void LinkedList::deleteTile(int tilePos) {
 //To String Method.
 std::string LinkedList::toString() 
 {
-   std::string toReturn = "";
-   Node* node = head;
-   while (node) 
-   {
-	   toReturn += ",";
-	   toReturn += node->tile->toString();
+std::string toReturn = "";
+   Node* tileNode = head;
+   while (tileNode != nullptr) {
+	  toReturn.append(", " + tileNode->tile->toString());
+      tileNode = tileNode->next;
    }
    return toReturn;
 }
