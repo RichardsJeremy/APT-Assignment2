@@ -1,1 +1,4 @@
-replace R3 at A0
+2
+replaceTileNotInHand.save
+replace Y6 at A0
+^D
