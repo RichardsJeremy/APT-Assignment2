@@ -1,0 +1,52 @@
+Welcome to Qwirkle!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Show student information
+4. Quit
+
+
+Quirkle game successfully loaded
+
+Let’s Play!
+B, it's your turn
+Score for A: 9
+Score for B: 6
+    0    2    4     6
+ ----------------------
+A |    |    |    |    |
+B    | Y5 |    |    |
+C |    | Y4 |    |    |
+D    |    | Y3 |    |
+E |    |    | Y2 |    |
+F    |    |    | Y1 |
+G |    |    |    |    |
+ ----------------------
+        1    3    5 
+
+your hand is
+G5,Y2,O2,B1,P6,B5
+
+
+A, it's your turn
+Score for A: 9
+Score for B: 12
+    0    2    4     6    8
+ ---------------------------
+A |    |    |    |    |    |
+B    | Y2 |    |    |    |
+C |    | Y5 |    |    |    |
+D    |    | Y4 |    |    |
+E |    |    | Y3 |    |    |
+F    |    |    | Y2 |    |
+G |    |    |    | Y1 |    |
+H    |    |    |    |    |
+ ---------------------------
+        1    3    5    7 
+
+your hand is
+R5,G5,R5,O2,B1,P6
+
+Goodbye
