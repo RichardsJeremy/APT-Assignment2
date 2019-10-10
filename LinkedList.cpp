@@ -23,7 +23,7 @@ int LinkedList::getSize() {
 }
 
 //Returns a tile.
-Tile * LinkedList::getTile(int tilePos) {
+Tile* LinkedList::getTile(int tilePos) {
 	Node* tileNode = head;
 	for (int i = 0; i<tilePos; i++) {
 		tileNode = tileNode->next;
@@ -48,7 +48,7 @@ int LinkedList::getTilePos(int shape, char colour) {
 }
 
 //Adds a tile to the list.
-void LinkedList::addTileToBack(Tile *tile) {
+void LinkedList::addTileToBack(Tile* tile) {
    Node* newTile = new Node(tile, nullptr);
    if (size > 1) {
 	  Node* tempTile = head;

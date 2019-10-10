@@ -1,16 +1,18 @@
+#ifndef PLAYER_H
+#define PLAYER_H
 #include "LinkedList.h"
 
 class Player{
-  std::string* name;
-  int* score;
 
 public:
-  LinkedList* hand;
+  std::string name;
+  int score;
+  LinkedList hand;
 
   Player();
   ~Player();
 
-  void setName(std::string _name);
+  void setName(std::string setName);
   std::string getName();
 
   void addScore(int amount);
@@ -18,3 +20,5 @@ public:
     
   std::string playerInformation();
 };
+
+#endif //PLAYER_H

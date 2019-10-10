@@ -1,5 +1,24 @@
 #include "Board.h"
 
+Board::Board()
+{
+	this->xSize = 1;
+	this->ySize = 1;
+	tile = new Tile**[ySize];
+	for (int y = 0; y < ySize; y++)
+	{
+		tile[y] = new Tile*[xSize];
+	}
+	for (int y = 0; y < ySize; y++)
+	{
+		for (int x = 0; x < xSize; x++)
+		{
+			tile[y][x] = nullptr;
+		}
+	}
+
+}
+
 Board::Board(int xSize, int ySize)
 {
    this->xSize = xSize;

@@ -1,13 +1,10 @@
 #include "controller.h"
-#include "player.cpp"
-#include "Board.h"
-#include "gameEngine.cpp"
-#include "LinkedList.cpp"
 #include <iostream>
 #include <stdlib.h>
 #include <iterator>
 #include <string>
 #include <vector>
+#include <memory>
 
 #define NUMBER_OF_TILES 6
 #define BOARD_HEIGHT 10
@@ -29,7 +26,7 @@ void controller::choose(int choice)
     }
     else if (choice == 2)
     {
-        loadGame();
+        //loadGame();
     }
     else if (choice == 3)
     {
@@ -71,13 +68,13 @@ void controller::newGame()
     for (int i = 0; i < NUMBER_OF_TILES; i++)
     {
         int pickTile = rand() % (bag->getSize() + 1);
-        Tile tile = bag->getTile(pickTile);
-        player1->hand->addTileToBack(&tile); 
+        Tile* tile = bag->getTile(pickTile);
+        player1->hand->addTileToBack(tile); 
         bag->deleteTile(pickTile);
 
         pickTile = rand() % (bag->getSize() + 1);
         tile = bag->getTile(pickTile);
-        player2->hand->addTileToBack(&tile); 
+        player2->hand->addTileToBack(tile); 
         bag->deleteTile(pickTile);
 
     }
@@ -94,7 +91,7 @@ void controller::newGame()
 /* This method reads in input from a saved file to create a new gameEngine object with
 a board and two players with appriopriate tiles. 
 */
-void controller::loadGame()
+/*void controller::loadGame()
 {
 
     std::cout << "\nEnter the file name from which to load a game\n";
@@ -160,7 +157,7 @@ void controller::loadGame()
     {
         std::cout << "File not loaded :(\n";
     }
-}
+} */
 
 /*This method takes in a the neccessary objects to run the gaem and then loops 
 with a while loop until a player wins or quits
@@ -240,7 +237,7 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
             {
                 invalidTurn = false;
 
-            if ((userTurn.length == 14) && (userTurn.substr(0, 5) == "place"))
+            if ((userTurn.length() == 14) && (userTurn.substr(0, 5) == "place"))
             { //i.e a place move
                 std::string tile = userTurn.substr(6, 2);
                 std::string position = userTurn.substr(12, 2);
@@ -260,7 +257,7 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
                    }
                 }
             }
-            else if ((userTurn.length == 10) && (userTurn.substr(0, 7) == "replace")) //i.e. replace tile
+            else if ((userTurn.length() == 10) && (userTurn.substr(0, 7) == "replace")) //i.e. replace tile
             {
                 if (bag->getSize() > 0)
                 {

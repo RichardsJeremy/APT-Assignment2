@@ -14,8 +14,8 @@ public:
 
    int getSize();
    int getTilePos(int shape, char colour);
-   Tile * getTile(int pos);
-   void addTileToBack(Tile *tile);
+   Tile* getTile(int pos);
+   void addTileToBack(Tile* tile);
    void deleteTile(int pos);
    std::string toString();
 

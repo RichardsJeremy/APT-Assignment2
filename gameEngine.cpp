@@ -51,8 +51,8 @@ bool gameEngine::placeTile(std::string tile, std::string pos, std::shared_ptr<Li
     if (bag->getSize() > 0)
     {
         int pickTile = rand() % (bag->getSize() + 1);
-        Tile tile = bag->getTile(pickTile);
-        player->hand->addTileToBack(&tile);
+        Tile* tile = bag->getTile(pickTile);
+        player->hand->addTileToBack(tile);
         bag->deleteTile(pickTile);
     }
 
@@ -64,6 +64,7 @@ bool gameEngine::placeTile(std::string tile, std::string pos, std::shared_ptr<Li
     {
         validMove = true;
     }
+	return validMove;
 }
 
 // replaces tile in players hand
@@ -75,12 +76,12 @@ void gameEngine::replaceTile(std::string tile, std::shared_ptr<LinkedList> bag,
     int tilePos = player->hand->getTilePos(shape, colour);
     player->hand->deleteTile(tilePos);
 
-    // add tile to players hadn
+    // add tile to players hand
     int pickTile = rand() % (bag->getSize() + 1);
-    Tile tileToRemove = bag->getTile(pickTile);
-    player->hand->addTileToBack(&tileToRemove);
+    Tile* tileToRemove = bag->getTile(pickTile);
+    player->hand->addTileToBack(tileToRemove);
     bag->deleteTile(pickTile);
 
-    Tile *tileToAdd = new Tile(shape, colour);
+    Tile* tileToAdd = new Tile(shape, colour);
     bag->addTileToBack(tileToAdd);
 }
