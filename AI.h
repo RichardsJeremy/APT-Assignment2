@@ -24,5 +24,6 @@ private:
 	static int getOppositeDirection(int direction);
 	static std::string getPlaceCommand(Tile* tile, std::pair<int, int> space);
 	static bool isFilled(Tile * tile);
+	static int getPoints(std::shared_ptr<Board> board, std::string move);
 };
 

@@ -24,9 +24,13 @@ std::string AI::getMoveOptimal(std::shared_ptr<Board> board, LinkedList hand)
 		for (auto i = potentialMoves.begin(); i != potentialMoves.end(); ++i)
 		{
 			std::string potentialMove = *i;
-			int getPoints = 0;
-			if(getPoints > bestMovePoints)
+			int points = getPoints(board, potentialMove);
+			if (points > bestMovePoints) 
+			{
 				bestMove = potentialMove;
+				bestMovePoints = points;
+			}
+				
 		}
 		return bestMove;
 	}
@@ -67,8 +71,9 @@ std::vector<std::string> AI::getPotentialMoves(std::shared_ptr<Board> boardObj, 
 							if (pieceInHand->related(board[row][col]))
 								//Loops through hand to find a related tile
 							{
-								//if placeable
-								potentialMoves.push_back(getPlaceCommand(pieceInHand, emptySpace));
+								int points = boardObj->validTile(pieceInHand->getColour, pieceInHand->getShape, std::get<0>(emptySpace), std::get<0>(emptySpace));
+								if(points > 0)
+									potentialMoves.push_back(getPlaceCommand(pieceInHand, emptySpace));
 							}
 						}
 				}
@@ -86,7 +91,7 @@ std::string AI::getHint(std::shared_ptr<Board> board, LinkedList hand, Tile* til
 		std::string potentialMove = *i;
 		if (potentialMove.find(tileStr) != std::string::npos) 
 		{
-			int points = 0; //point algorithm call
+			int points = getPoints(board, potentialMove); //point algorithm call
 			potentialMove += " for ";
 			potentialMove += std::to_string(points);
 			potentialMove += " points";
@@ -151,6 +156,12 @@ bool AI::isFilled(Tile * tile)
 	if (tile->equals(openTile))
 		return false;
 	return true;
+}
+
+int AI::getPoints(std::shared_ptr<Board> board, std::string move)
+{
+	Tile tile = Tile((char)move.at(7), (int)move.at(8));
+	return board->validTile((char)move.at(7), (int)move.at(8), (int)move.at(13), (int)move.at(14));
 }
 
 

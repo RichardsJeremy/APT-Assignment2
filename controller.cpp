@@ -108,7 +108,7 @@ void controller::loadGame()
     std::string line;
     std::ifstream saveFile(fileName);
 
-    //declaing bool for who starts
+    //declaring bool for who starts
     bool p1Starts = true;
 
     if (saveFile.is_open())
