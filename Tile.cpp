@@ -5,7 +5,12 @@ Tile::Tile(char colour_, int shape_) : colour(colour_), shape(shape_) {}
 
 std::string Tile::toString()
 {
-    return std::to_string(colour) + std::to_string(shape);    
+	std::string toReturn;
+	std::string toChar;
+	toChar = (char)colour;
+	toReturn.append(toChar);
+	toReturn.append(std::to_string(shape));
+    return toReturn;    
 }
 
 char Tile::getColour()

@@ -1,5 +1,24 @@
 #include "Board.h"
 
+Board::Board()
+{
+	this->xSize = 1;
+	this->ySize = 1;
+	tile = new Tile**[ySize];
+	for (int y = 0; y < ySize; y++)
+	{
+		tile[y] = new Tile*[xSize];
+	}
+	for (int y = 0; y < ySize; y++)
+	{
+		for (int x = 0; x < xSize; x++)
+		{
+			tile[y][x] = nullptr;
+		}
+	}
+
+}
+
 Board::Board(int xSize, int ySize)
 {
    this->xSize = xSize;
@@ -48,7 +67,11 @@ int Board::placeTile(char colour, int shape, int xPos, int yPos)
 {
    int points = 0;
    //Validate position
-   if ((yPos % 2 == 0 || yPos == 0) && (xPos % 2 == 0 || xPos == 0))
+   if (xSize == 1 && ySize == 1)
+   {
+	   points += 1;
+   }
+   else if ((yPos % 2 == 0 || yPos == 0) && (xPos % 2 == 0 || xPos == 0))
    {
       points = validTile(colour, shape, xPos, yPos);
    }
@@ -210,10 +233,11 @@ void Board::expandBoard(int xPos, int yPos)
       }
 	  for (int x = 0; x < xSize + 2; x++)
       {
-         for (int y = 0; y < ySize; y++)
+         for (int y = 0; y < ySize - 1; y++)
 		 {
             if(tile[y][x] != nullptr)
             {
+			   std::cout << std::to_string(y) << std::to_string(x);
                expTile[y][x + 2] = new Tile(tile[y][x]->getColour(), tile[y][x]->getShape());
             }
          }
@@ -371,9 +395,9 @@ std::string Board::toString()
 {
    std::string boardString = "";
    boardString.append(" ");
-   for(int x = 0; x < xSize; x += 2)
+   for(int x = 0; x <= xSize; x += 2)
    {
-      boardString.append("    " + x);
+      boardString.append("    " + std::to_string(x));
    }
    boardString.append("\n   -");
    for(int x = 0; x < xSize; x += 2)
@@ -389,7 +413,7 @@ std::string Board::toString()
       
       if (y % 2 == 0)
 	  {
-         boardString.append(row + " |");
+         boardString.append(row + "  |");
          for(int x = 0; x < xSize; x++)
          {
             boardString.append(" ");
@@ -413,7 +437,7 @@ std::string Board::toString()
    boardString.append("\n    ");
    for(int x = 1; x < xSize; x += 2)
    {
-      boardString.append("    " + x);
+      boardString.append("   " + std::to_string(x));
    }
    boardString.append("\n");
    return boardString;

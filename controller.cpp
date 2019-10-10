@@ -1,13 +1,10 @@
 #include "controller.h"
-#include "player.cpp"
-#include "Board.h"
-#include "gameEngine.cpp"
-#include "LinkedList.cpp"
 #include <iostream>
 #include <stdlib.h>
 #include <iterator>
 #include <string>
 #include <vector>
+#include <memory>
 
 #define NUMBER_OF_TILES 6
 #define BOARD_HEIGHT 10
@@ -29,7 +26,7 @@ void controller::choose(int choice)
     }
     else if (choice == 2)
     {
-        loadGame();
+        //loadGame();
     }
     else if (choice == 3)
     {
@@ -61,23 +58,24 @@ void controller::newGame()
     // create blank players and board here with heap allocation and then pass
     // pointers onto runGame() method.
     std::shared_ptr<Board> board = std::make_shared<Board>();
-    std::shared_ptr<Player> player1 = std::make_shared<Player>();
-    player1->setName(playerOneName);
-    std::shared_ptr<Player> player2 = std::make_shared<Player>();
-	player2->setName(playerTwoName);
+    std::shared_ptr<Player> player1 = std::make_shared<Player>(playerOneName);
+    std::shared_ptr<Player> player2 = std::make_shared<Player>(playerTwoName);
     std::shared_ptr<LinkedList> bag = std::make_shared<LinkedList>();
     createBag(bag);
 
     for (int i = 0; i < NUMBER_OF_TILES; i++)
     {
-        int pickTile = rand() % (bag->getSize() + 1);
-        Tile tile = bag->getTile(pickTile);
-        player1->hand->addTileToBack(&tile); 
+		srand(time(NULL));
+        int pickTile = rand() % bag->getSize();
+		std::cout << "\n" << std::to_string(pickTile);
+        Tile* tile = bag->getTile(pickTile);
+        player1->hand->addTileToBack(tile); 
         bag->deleteTile(pickTile);
 
-        pickTile = rand() % (bag->getSize() + 1);
+        pickTile = rand() % bag->getSize();
+		std::cout << "\n" << std::to_string(pickTile);
         tile = bag->getTile(pickTile);
-        player2->hand->addTileToBack(&tile); 
+        player2->hand->addTileToBack(tile); 
         bag->deleteTile(pickTile);
 
     }
@@ -94,7 +92,7 @@ void controller::newGame()
 /* This method reads in input from a saved file to create a new gameEngine object with
 a board and two players with appriopriate tiles. 
 */
-void controller::loadGame()
+/*void controller::loadGame()
 {
 
     std::cout << "\nEnter the file name from which to load a game\n";
@@ -160,7 +158,7 @@ void controller::loadGame()
     {
         std::cout << "File not loaded :(\n";
     }
-}
+} */
 
 /*This method takes in a the neccessary objects to run the gaem and then loops 
 with a while loop until a player wins or quits
@@ -181,36 +179,37 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
 
     while (!win && !quit)
     {
+		std::cout << "\n";
         if (playerOneTurn)
         {
-            std::cout << player1->getName() << ", it's your turn";
+            std::cout << player1->getName() << ", it's your turn\n";
         }
         else
         {
-            std::cout << player2->getName() << ", it's your turn";
+            std::cout << player2->getName() << ", it's your turn\n";
         }
-
-        std::cout << "Score for " << player1->getName() << ": " << player1->getScore();
-        std::cout << "Score for " << player2->getName() << ": " << player2->getScore();
+		char letterB = 66;
+		board->placeTile(letterB, 1, 0, 0);
+        std::cout << "Score for " << player1->getName() << ": " << player1->getScore() << "\n";
+        std::cout << "Score for " << player2->getName() << ": " << player2->getScore() << "\n";
         std::cout << "\n";
         std::cout << board->toString();
         std::cout << "\n";
         std::cout << "Your hand is";
         if (playerOneTurn)
         {
-            player1->hand->toString();
+            std::cout << player1->hand->toString();
         }
         else
         {
             player2->hand->toString();
         }
-        std::cout << "\n";
-
+        std::cout << "\n";		
         std::string userTurn = "";
         std::getline(std::cin, userTurn);
 
         //bool to redo turn until valid input is entered
-        bool invalidTurn = true;
+		bool invalidTurn = true;
 
         while (invalidTurn)
         {
@@ -240,10 +239,11 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
             {
                 invalidTurn = false;
 
-            if ((userTurn.length == 14) && (userTurn.substr(0, 5) == "place"))
+            if ((userTurn.length() == 14) && (userTurn.substr(0, 5) == "place"))
             { //i.e a place move
                 std::string tile = userTurn.substr(6, 2);
                 std::string position = userTurn.substr(12, 2);
+				//place P4 at G5
 
                 if (playerOneTurn)
                 {
@@ -260,7 +260,7 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
                    }
                 }
             }
-            else if ((userTurn.length == 10) && (userTurn.substr(0, 7) == "replace")) //i.e. replace tile
+            else if ((userTurn.length() == 10) && (userTurn.substr(0, 7) == "replace")) //i.e. replace tile
             {
                 if (bag->getSize() > 0)
                 {
@@ -361,15 +361,15 @@ void controller::showInformation()
 
 void controller::createBag(std::shared_ptr<LinkedList> bag)
 {
-    char colours [6] = {'R', 'O', 'Y', 'G', 'B', 'P'};
+    char colours [6] = {82, 79, 89, 71, 66, 80};
     int shapes [6] = {1,2,3,4,5,6};
 
     for (int i = 0; i < NUMBER_OF_TILES; i++)
     {
         for (int j = 0; j < NUMBER_OF_TILES; j++)
         {
-            Tile *tile1 = new Tile(colours[i],shapes[j]);
-            Tile *tile2 = new Tile(colours[i],shapes[j]);
+            Tile* tile1 = new Tile(colours[i],shapes[j]);
+            Tile* tile2 = new Tile(colours[i],shapes[j]);
 
             bag->addTileToBack(tile1);
             bag->addTileToBack(tile2);

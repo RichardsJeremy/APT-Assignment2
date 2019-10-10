@@ -2,8 +2,8 @@
 #include "LinkedList.h"
 
 #include <iostream>
-#include "menu.cpp"
-#include "controller.cpp"
+#include "menu.h"
+#include "controller.h"
 
 #define EXIT_SUCCESS 0
 

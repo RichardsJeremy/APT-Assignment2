@@ -1,6 +1,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "Tile.h"
+#include "board.h"
+#include "player.h"
+#include "LinkedList.h"
 
 class gameEngine
 {

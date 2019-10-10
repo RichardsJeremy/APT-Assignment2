@@ -12,6 +12,7 @@
 
 class Board {
 public:
+   Board();
    Board(int xSize, int ySize);
    ~Board();
    int getXSize();
