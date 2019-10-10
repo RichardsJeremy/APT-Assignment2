@@ -118,8 +118,8 @@ int Board::validTile(char colour, int shape, int xPos, int yPos)
       }
       while (currentTile1 != nullptr)
       {
-         if ((currentTile1->getColour() == colour && currentTile1->getShape != shape)
-            || (currentTile1->getShape == shape && currentTile1->getColour() !=colour))
+         if ((currentTile1->getColour() == colour && currentTile1->getShape() != shape)
+            || (currentTile1->getShape() == shape && currentTile1->getColour() !=colour))
          {
             returnPoints += 1;
 			currentPos1 += 1;
@@ -135,8 +135,8 @@ int Board::validTile(char colour, int shape, int xPos, int yPos)
       }
 	  while (currentTile2 != nullptr)
       {
-         if ((currentTile2->getColour() == colour && currentTile2->getShape != shape)
-            || (currentTile2->getShape == shape && currentTile2->getColour() !=colour))
+         if ((currentTile2->getColour() == colour && currentTile2->getShape() != shape)
+            || (currentTile2->getShape() == shape && currentTile2->getColour() !=colour))
          {
             returnPoints += 1;
 			currentPos1 += 1;
@@ -152,8 +152,8 @@ int Board::validTile(char colour, int shape, int xPos, int yPos)
       }
 	  while (currentTile3 != nullptr)
       {
-         if ((currentTile3->getColour() == colour && currentTile3->getShape != shape)
-            || (currentTile3->getShape == shape && currentTile3->getColour() !=colour))
+         if ((currentTile3->getColour() == colour && currentTile3->getShape() != shape)
+            || (currentTile3->getShape() == shape && currentTile3->getColour() !=colour))
          {
             returnPoints += 1;
 			currentPos3 += 1;
@@ -169,8 +169,8 @@ int Board::validTile(char colour, int shape, int xPos, int yPos)
       }
 	  while (currentTile4 != nullptr)
       {
-         if ((currentTile4->getColour() == colour && currentTile4->getShape != shape)
-            || (currentTile4->getShape == shape && currentTile4->getColour() !=colour))
+         if ((currentTile4->getColour() == colour && currentTile4->getShape() != shape)
+            || (currentTile4->getShape() == shape && currentTile4->getColour() !=colour))
          {
             returnPoints += 1;
 			currentPos4 += 1;
