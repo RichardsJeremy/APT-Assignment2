@@ -1,1 +1,4 @@
-place R3 at A0
+2
+placeTileNotInHand.save
+place Y6 at A0
+^D
