@@ -6,12 +6,9 @@ Menu
 2. Load Game
 3. Show student information
 4. Quit
-> 1
-Starting a New Game
-Enter a name for player 1 (uppercase characters only)
-> A
-Enter a name for player 2 (uppercase characters only)
-> B
+
+
+Quirkle game successfully loaded
 
 Let’s Play!
 A, it's your turn
@@ -21,13 +18,10 @@ Score for B: 0
  --------
 A |    |
 
-
-
 your hand is
 Y5,G5,R5,O2,B1,P6
 
 
-> place Y5 at A0
 B, it's your turn
 Score for A: 1
 Score for B: 0
@@ -44,11 +38,8 @@ your hand is
 G5,R5,O2,B1,P6,Y5
 
 
-> place B1 at A2
 Invalid Input!
 Please enter a valid move.
 
-
-> ^D
 
 Goodbye
