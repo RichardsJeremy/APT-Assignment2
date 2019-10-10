@@ -206,38 +206,20 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
         }
         std::cout << "\n";		
         std::string userTurn = "";
-        std::getline(std::cin, userTurn);
+        if (AIPlayerEnabled && !playerOneTurn) 
+	{
+		userTurn = AI::getMoveOptimal(board, player2->hand);
+		std::cout << userTurn << "\n";
+	}
+	else
+		std::getline(std::cin, userTurn);
 
         //bool to redo turn until valid input is entered
 		bool invalidTurn = true;
 
         while (invalidTurn)
         {
-            if(!playerOneTurn && AIPlayerEnabled) {
-                    //MAXWELL -- INSERT YOUR CODE HERE
-
-
-                    /*
-
-
-
-                    MAXES CODE FOR AI
-
-                    Just needs one turn - i.e. place tile or replace tile. The hand of the player is player2
-                    to make it work with my existing function use this code below. All you have to do is replace the 
-                    tile and position with strings of the tile (Y1) or position (A1)
-
-                    gameEngineHelper->placeTile(tile, position, bag, board, player2)
-
-                    if replaceing use this one where tile is also a string
-
-                    gameEngineHelper->replaceTile(tile, bag, player2)
-
-                    */
-            }
-            else
-            {
-                invalidTurn = false;
+            invalidTurn = false;
 
             if ((userTurn.length() == 14) && (userTurn.substr(0, 5) == "place"))
             { //i.e a place move
@@ -293,9 +275,7 @@ void controller::runGame(std::shared_ptr<Board> board, std::shared_ptr<Player> p
                     std::cout << "Invalid Input";
                     invalidTurn = true;
                 }
-            }
-            }
-            
+            } 
         }
 
         // check bag or player hand
