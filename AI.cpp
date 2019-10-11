@@ -45,15 +45,10 @@ std::vector<std::string> AI::getPotentialMoves(std::shared_ptr<Board> boardObj, 
 	std::vector<std::string> potentialMoves;
 	//array for storing potential moves
 
-<<<<<<< HEAD
+
 	int rows = boardObj.getYSize();
 	int cols = boardObj.getXSize();
 	Tile*** board = boardObj.getBoard();
-=======
-	int rows = boardObj->getYSize();
-	int cols = boardObj->getXSize();
-	Tile*** board = boardObj->getBoard;
->>>>>>> a9906078ddd28106458df26252af3ff8c166cf51
 
 
 	for (int row = 0; row < rows; ++row)
